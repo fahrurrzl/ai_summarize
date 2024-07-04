@@ -27,7 +27,7 @@ const Demo = () => {
     if (allArticleFromLocalStorage) {
       setAllArticle(allArticleFromLocalStorage);
     }
-  }, [article.summary, allArticle]);
+  }, [article.summary]);
 
   const handleCopy = (articleUrl) => {
     navigator.clipboard.writeText(articleUrl);
@@ -85,7 +85,7 @@ const Demo = () => {
       }
     });
   };
-
+  console.log(error);
   return (
     <section className="w-full max-w-xl mt-12">
       <div className="flex flex-col w-full gap-2">
@@ -154,7 +154,7 @@ const Demo = () => {
           <img src={loader} alt="loader" className="w-12" />
         </div>
       ) : error ? (
-        <BoxError message={error?.data.error} />
+        <BoxError message={error?.data.error || error?.data.message} />
       ) : article?.summary ? (
         <div className="box-summary">
           <div className="mb-3 flex items-center justify-between">
