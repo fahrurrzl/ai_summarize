@@ -13,6 +13,7 @@ const Demo = () => {
     summary: "",
   });
   const [allArticle, setAllArticle] = useState([]);
+  const [copied, setCopied] = useState("");
 
   const [getSummary, { error, isFetching }] = useLazyGetSummaryQuery();
 
@@ -28,6 +29,10 @@ const Demo = () => {
 
   const handleCopy = (articleUrl) => {
     navigator.clipboard.writeText(articleUrl);
+    setCopied(articleUrl);
+    setTimeout(() => {
+      setCopied("");
+    }, 3000);
   };
 
   const handleSubmit = async (e) => {
@@ -88,7 +93,12 @@ const Demo = () => {
                 className="text-slate-500 flex items-center justify-center gap-2"
                 onClick={() => handleCopy(item.url)}
               >
-                <IoCopyOutline size={18} />
+                {copied === item.url ? (
+                  <SiTicktick size={18} />
+                ) : (
+                  <IoCopyOutline size={18} />
+                )}
+
                 {item.url}
               </button>
             </div>
