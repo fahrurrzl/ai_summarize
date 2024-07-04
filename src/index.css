@@ -85,3 +85,16 @@
 .box-error {
   @apply p-3 rounded-md bg-white/50 backdrop-blur-sm text-red-500 flex gap-2 my-4;
 }
+
+.wrap-url::-webkit-scrollbar {
+  @apply w-1;
+}
+.wrap-url::-webkit-scrollbar-track {
+  @apply bg-gray-50;
+}
+.wrap-url::-webkit-scrollbar-thumb {
+  @apply rounded-sm bg-blue-500/30 backdrop-blur-sm;
+}
+.wrap-url::-webkit-scrollbar-thumb:hover {
+  @apply bg-blue-500/50;
+}
