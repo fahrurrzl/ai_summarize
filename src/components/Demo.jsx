@@ -6,6 +6,7 @@ import BoxError from "./BoxError";
 import { IoCopyOutline } from "react-icons/io5";
 import { SiTicktick } from "react-icons/si";
 import { IoIosClose } from "react-icons/io";
+import { MdDeleteForever } from "react-icons/md";
 
 const Demo = () => {
   const [article, setArticle] = useState({
@@ -55,6 +56,17 @@ const Demo = () => {
     });
   };
 
+  const handleDeleteUrl = (articleUrl) => {
+    const allArticleInLocalStorage = JSON.parse(
+      localStorage.getItem("articles")
+    );
+    const newAllArticle = allArticleInLocalStorage.filter(
+      (article) => article.url !== articleUrl
+    );
+
+    localStorage.setItem("articles", JSON.stringify(newAllArticle));
+  };
+
   return (
     <section className="w-full max-w-xl mt-12">
       <div className="flex flex-col w-full gap-2">
@@ -84,26 +96,35 @@ const Demo = () => {
         </form>
         {/* Browse url */}
         <div className="max-h-56 p-1 overflow-y-auto wrap-url">
-          {allArticle?.map((item, index) => (
-            <div
-              key={`item-${index}`}
-              className="p-2 rounded-sm text-sm bg-white/40 backdrop-blur-sm text-slate-500 truncate mb-2 flex items-center gap-2 cursor-pointer active:scale-[.99] transition-all"
-              onClick={() => setArticle(item)}
-            >
-              <button
-                type="button"
-                className="text-slate-500"
-                onClick={() => handleCopy(item.url)}
-              >
-                {copied === item.url ? (
-                  <SiTicktick size={18} />
-                ) : (
-                  <IoCopyOutline size={18} />
-                )}
-              </button>
-              {item.url}
-            </div>
-          ))}
+          {allArticle
+            ? allArticle?.map((item, index) => (
+                <div
+                  key={`item-${index}`}
+                  className="p-2 rounded-sm text-sm bg-white/40 backdrop-blur-sm text-slate-500 mb-2 flex items-center justify-between gap-2 cursor-pointer active:scale-[.99] transition-all"
+                  onClick={() => setArticle(item)}
+                >
+                  <button
+                    type="button"
+                    className="text-slate-500"
+                    onClick={() => handleCopy(item.url)}
+                  >
+                    {copied === item.url ? (
+                      <SiTicktick size={18} />
+                    ) : (
+                      <IoCopyOutline size={18} />
+                    )}
+                  </button>
+                  <p className="truncate">{item.url}</p>
+                  <button
+                    type="button"
+                    className="text-red-500 hover:text-red-600 transition-all duration-300"
+                    onClick={() => handleDeleteUrl(item.url)}
+                  >
+                    <MdDeleteForever size={20} />
+                  </button>
+                </div>
+              ))
+            : null}
         </div>
       </div>
 

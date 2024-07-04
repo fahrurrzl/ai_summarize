@@ -1,5 +1,4 @@
 import { FaGithub } from "react-icons/fa";
-import { LuFileCog } from "react-icons/lu";
 import { icon } from "../assets";
 
 const Hero = () => {
