@@ -25,7 +25,7 @@ const Demo = () => {
     if (allArticleFromLocalStorage) {
       setAllArticle(allArticleFromLocalStorage);
     }
-  }, []);
+  }, [article.summary]);
 
   const handleCopy = (articleUrl) => {
     navigator.clipboard.writeText(articleUrl);
@@ -41,8 +41,10 @@ const Demo = () => {
 
     if (data?.summary) {
       const newArticle = { ...article, summary: data.summary };
+      const updateAllArticle = [...allArticle, newArticle];
 
       setArticle(newArticle);
+      localStorage.setItem("articles", JSON.stringify(updateAllArticle));
     }
   };
 
@@ -85,12 +87,12 @@ const Demo = () => {
           {allArticle?.map((item, index) => (
             <div
               key={`item-${index}`}
-              className="p-2 rounded-sm text-sm bg-white/40 backdrop-blur-sm text-slate-500 truncate mb-2"
+              className="p-2 rounded-sm text-sm bg-white/40 backdrop-blur-sm text-slate-500 truncate mb-2 flex items-center gap-2 cursor-pointer active:scale-[.99] transition-all"
               onClick={() => setArticle(item)}
             >
               <button
                 type="button"
-                className="text-slate-500 flex items-center justify-center gap-2"
+                className="text-slate-500"
                 onClick={() => handleCopy(item.url)}
               >
                 {copied === item.url ? (
@@ -98,9 +100,8 @@ const Demo = () => {
                 ) : (
                   <IoCopyOutline size={18} />
                 )}
-
-                {item.url}
               </button>
+              {item.url}
             </div>
           ))}
         </div>
