@@ -14,7 +14,10 @@ const Hero = () => {
             Ringks
           </h1>
         </div>
-        <button className="btn-github">
+        <button
+          className="btn-github"
+          onClick={() => window.open("https://github.com/rizal57/ai_summarize")}
+        >
           <FaGithub size={18} />
           GitHub
         </button>
