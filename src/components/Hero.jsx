@@ -1,13 +1,19 @@
 import { FaGithub } from "react-icons/fa";
 import { LuFileCog } from "react-icons/lu";
+import { icon } from "../assets";
 
 const Hero = () => {
   return (
     <header className="flex flex-col items-center justify-center w-full pt-3">
       <nav className="flex items-center justify-between w-full mb-8">
         <div className="flex items-center gap-2">
-          <LuFileCog size={24} className="text-blue-500" />
-          <h1 className="font-bold text-xl text-gray-600">Ringks</h1>
+          <img src={icon} alt="icon" />
+          <h1
+            className="font-bold text-xl text-gray-600"
+            style={{ userSelect: "none" }}
+          >
+            Ringks
+          </h1>
         </div>
         <button className="btn-github">
           <FaGithub size={18} />

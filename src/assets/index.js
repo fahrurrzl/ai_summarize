@@ -1,3 +1,4 @@
 import loader from "./loader.svg";
+import icon from "./icon.ico";
 
-export { loader };
+export { loader, icon };
