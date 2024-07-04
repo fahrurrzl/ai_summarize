@@ -7,6 +7,7 @@ import { IoCopyOutline } from "react-icons/io5";
 import { SiTicktick } from "react-icons/si";
 import { IoIosClose } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const Demo = () => {
   const [article, setArticle] = useState({
@@ -26,7 +27,7 @@ const Demo = () => {
     if (allArticleFromLocalStorage) {
       setAllArticle(allArticleFromLocalStorage);
     }
-  }, [article.summary]);
+  }, [article.summary, allArticle]);
 
   const handleCopy = (articleUrl) => {
     navigator.clipboard.writeText(articleUrl);
@@ -60,11 +61,29 @@ const Demo = () => {
     const allArticleInLocalStorage = JSON.parse(
       localStorage.getItem("articles")
     );
-    const newAllArticle = allArticleInLocalStorage.filter(
-      (article) => article.url !== articleUrl
-    );
 
-    localStorage.setItem("articles", JSON.stringify(newAllArticle));
+    Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "rgb(59 130 246)",
+      cancelButtonColor: "rgb(239 68 68)",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newAllArticle = allArticleInLocalStorage.filter(
+          (article) => article.url !== articleUrl
+        );
+
+        localStorage.setItem("articles", JSON.stringify(newAllArticle));
+
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your summary has been deleted.",
+          icon: "success",
+        });
+      }
+    });
   };
 
   return (
@@ -101,7 +120,6 @@ const Demo = () => {
                 <div
                   key={`item-${index}`}
                   className="p-2 rounded-sm text-sm bg-white/40 backdrop-blur-sm text-slate-500 mb-2 flex items-center justify-between gap-2 cursor-pointer active:scale-[.99] transition-all"
-                  onClick={() => setArticle(item)}
                 >
                   <button
                     type="button"
@@ -114,7 +132,9 @@ const Demo = () => {
                       <IoCopyOutline size={18} />
                     )}
                   </button>
-                  <p className="truncate">{item.url}</p>
+                  <p className="truncate" onClick={() => setArticle(item)}>
+                    {item.url}
+                  </p>
                   <button
                     type="button"
                     className="text-red-500 hover:text-red-600 transition-all duration-300"
